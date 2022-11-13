@@ -30,7 +30,7 @@
 - Ao selecionar um produto deverão ser apresentados os detalhes do mesmo ([PDP](#pdp)).
 - Serão mostrados, no máximo, quatro (4) produtos por fila. A apresentação dos mesmos será adaptativa, consoante a resolução.
 
-![PLP](images\PLP_image.png)
+![PLP](images/PLP_image.png)
 ---
 ### PDP
 **Product Details Page**
@@ -40,7 +40,7 @@
 	+ Na segunda, serão apresentados os detalhes do produto e diversas opções.
 - Deverá mostrar um _link_ para voltar à página da lista dos produtos ([PLP](#plp))
 
-![PDP](images\PDP_image.png)
+![PDP](images/PDP_image.png)
 ---
 ## Descrição dos componentes
 
