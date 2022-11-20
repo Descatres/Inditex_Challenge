@@ -15,10 +15,11 @@ const Description = () => {
 
   const [description, setDescription] = useState([]);
   const colorsOptions = useRef();
+  const storagesOptions = useRef();
 
   const onAddCartHandler = () => {
     console.log(colorsOptions.current.value);
-
+    console.log(storagesOptions.current.value);
     // post request with the colorCode and storageCode ( create new useRef for the storage)
   };
 
@@ -133,7 +134,7 @@ const Description = () => {
               >
                 Storage
               </Form.Label>
-              <Form.Select ref={colorsOptions} required>
+              <Form.Select ref={storagesOptions} required>
                 {storagesAvailable}
               </Form.Select>
             </Form.Group>
