@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
-import { Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from "react-router-dom";
 
-import Header from './components/Header/Header';
-import Item from './components/Item/Item';
-import Search from './components/Search/Search';
-import Description from './components/Description/Description';
+import Header from "./components/Header/Header";
+import Item from "./components/Item/Item";
+import Search from "./components/Search/Search";
+import Description from "./components/Description/Description";
+import BreadCrumbC from "./components/BreadCrumb/BreadCrumbC";
 
 // TODO:
 // Adicionar Link ou NavLink na página das descriptions para voltar para a lista de produtos (/item_list)
@@ -14,17 +15,25 @@ import Description from './components/Description/Description';
 function App() {
   return (
     <Fragment>
-      <Header/>
-      <Search/>
-      <main>
-        <Route path="/item_list">
-            <Item/>
-        </Route>
-        <Route path="/item_list/description/:id">
-            <Description/>
-        </Route>
-      </main>
+      <Header />
 
+      <main>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/item_list" />
+          </Route>
+          <Route exact path="/item_list">
+            <BreadCrumbC />
+            <center>
+              <Item />
+            </center>
+          </Route>
+          <Route path="/item_list/description/:id">
+            <BreadCrumbC />
+            <Description />
+          </Route>
+        </Switch>
+      </main>
     </Fragment>
   );
 }
