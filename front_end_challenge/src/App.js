@@ -1,22 +1,20 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Header from "./components/Header/Header";
 import Item from "./components/Item/Item";
-import Search from "./components/Search/Search";
 import Description from "./components/Description/Description";
 import BreadCrumbC from "./components/BreadCrumb/BreadCrumbC";
 
-// TODO:
-// Adicionar Link ou NavLink na página das descriptions para voltar para a lista de produtos (/item_list)
-// https://www.youtube.com/watch?v=kmi4W8AxgQo&list=PLjZqtNyxmdk876ibJWatbc6bUDYsnzB6t&index=250&ab_channel=TheLoopco.
-
 function App() {
+  // Seria melhor um context, para todos os efeitos. Como o carrinho é, no fundo, só o counter, para poupar trabalho optei por esta opção
+  // Para além disso, caso fosse uma app maior, teria de realizar renders desnecessários da app, o que seria ineficiente
+
+  const [counter, setCounter] = useState(0);
   return (
     <Fragment>
-      <Header />
-
+      <Header carCounter={counter} />
       <main>
         <Switch>
           <Route exact path="/">
@@ -30,7 +28,7 @@ function App() {
           </Route>
           <Route path="/item_list/description/:id">
             <BreadCrumbC />
-            <Description />
+            <Description setCounter={setCounter} />
           </Route>
         </Switch>
       </main>

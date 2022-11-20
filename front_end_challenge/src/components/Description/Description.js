@@ -1,27 +1,35 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Button, Card, CardGroup, Form } from "react-bootstrap";
 import classes from "./Description.module.css";
 
-/*
-  <Route exact path={`/item_list/description/${params.id}`}>
-    <Redirect to={`/item_list/description/${params.brand}/${params.model}`}/>
-  </Route>
-*/
-
-const Description = () => {
+const Description = (props) => {
   let params = useParams();
 
   const [description, setDescription] = useState([]);
   const colorsOptions = useRef();
   const storagesOptions = useRef();
 
-  const onAddCartHandler = () => {
-    console.log(colorsOptions.current.value);
-    console.log(storagesOptions.current.value);
-    // post request with the colorCode and storageCode ( create new useRef for the storage)
-  };
+  async function onAddCartHandler() {
+    const postData = {
+      id: params.id,
+      colorCode: parseInt(colorsOptions.current.value),
+      storageCode: parseInt(storagesOptions.current.value),
+    };
+
+    const response = await fetch(
+      "https://front-test-api.herokuapp.com/api/cart",
+      {
+        method: "POST",
+        body: JSON.stringify(postData),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const data = await response.json();
+    // TODO: mandar o data.count para o HeaderCartButton
+    console.log(data);
+    props.setCounter(data.count);
+  }
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -32,8 +40,6 @@ const Description = () => {
       const responseData = await response.json();
 
       const loadedItems = [responseData];
-
-      //console.log(loadedItems);
 
       setDescription(loadedItems);
     };

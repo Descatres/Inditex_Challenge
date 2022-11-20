@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Item.module.css";
-
-import Search from "../Search/Search";
 import { Container, Button, Card, CardGroup } from "react-bootstrap";
 
 const Item = () => {
@@ -31,30 +29,6 @@ const Item = () => {
     fetchItems();
   }, []);
 
-  const [models, setModels] = useState([]);
-  useEffect(() => {
-    const loadedModels = [];
-    for (const key in items.model) {
-      loadedModels.push({
-        model: items[key].model,
-      });
-      console.log(loadedModels.model);
-    }
-    setModels(loadedModels);
-  }, [items]);
-
-  const [brands, setBrands] = useState([]);
-  useEffect(() => {
-    const loadedBrands = [];
-    for (const key in items.brand) {
-      loadedBrands.push({
-        brand: items[key].brand,
-      });
-      console.log(loadedBrands.brand);
-    }
-    setModels(loadedBrands);
-  }, []);
-
   let productsList = items.map((item) => (
     <div key={item.id}>
       <Card style={{ width: "auto", margin: "10px" }}>
@@ -81,9 +55,32 @@ const Item = () => {
     </div>
   ));
 
+  // const [search, setSearch] = useState({
+  //   search: "",
+  //   list: [],
+  // });
+
+  // const handleChange = (e) => {
+  //   const results = items.filter((item) => {
+  //     if (e.target.value === "") return item;
+  //     return item.title.toLowerCase().includes(e.target.value.toLowerCase());
+  //   });
+  //   setSearch({
+  //     search: e.target.value,
+  //     list: results,
+  //   });
+  // };
+
   return (
     <div className={classes.item}>
-      <Search model={models} />
+      <div className={classes.search}>
+        <input
+          type="text"
+          placeholder="Search"
+          //value={search}
+          //onChange={handleChange}
+        />
+      </div>
       <Container style={{ width: "100%" }}>
         <CardGroup>{productsList}</CardGroup>
       </Container>
