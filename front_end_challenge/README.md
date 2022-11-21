@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Inditex Front-end Challenge
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
