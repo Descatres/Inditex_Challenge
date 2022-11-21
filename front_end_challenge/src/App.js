@@ -10,8 +10,8 @@ import BreadCrumbC from "./components/BreadCrumb/BreadCrumbC";
 function App() {
   // Seria melhor um context, para todos os efeitos. Como o carrinho é, no fundo, só o counter, para poupar trabalho optei por esta opção
   // Para além disso, caso fosse uma app maior, teria de realizar renders desnecessários da app, o que seria ineficiente
-
   const [counter, setCounter] = useState(0);
+
   return (
     <Fragment>
       <Header carCounter={counter} />

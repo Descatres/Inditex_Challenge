@@ -28,8 +28,6 @@ const Description = (props) => {
       }
     );
     const data = await response.json();
-    // TODO: mandar o data.count para o HeaderCartButton
-    console.log(data);
     props.setCounter(data.count);
   }
 
