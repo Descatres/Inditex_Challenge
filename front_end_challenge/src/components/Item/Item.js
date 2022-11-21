@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Item.module.css";
 import { Container, Button, Card, CardGroup } from "react-bootstrap";
+import {
+  localStorageSaveItems,
+  localStorageGetItems,
+} from "../../utils/localStorage";
 
 const Item = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(localStorageGetItems());
   useEffect(() => {
+    if (items.length > 0) return;
     const fetchItems = async () => {
       const response = await fetch(
         "https://front-test-api.herokuapp.com/api/product"
@@ -24,10 +29,12 @@ const Item = () => {
         });
       }
       setItems(loadedItems);
+      // save on local storage
+      localStorageSaveItems(loadedItems);
     };
 
     fetchItems();
-  }, []);
+  }, [items.length]);
 
   let productsList = items.map((item) => (
     <div key={item.id}>

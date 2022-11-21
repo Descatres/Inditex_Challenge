@@ -2,14 +2,16 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Card, CardGroup, Form } from "react-bootstrap";
 import classes from "./Description.module.css";
+import {
+  localStorageSaveDescription,
+  localStorageGetDescription,
+} from "../../utils/localStorage";
 
 const Description = (props) => {
   let params = useParams();
 
-  const [description, setDescription] = useState([]);
   const colorsOptions = useRef();
   const storagesOptions = useRef();
-
   async function onAddCartHandler() {
     const postData = {
       id: params.id,
@@ -31,7 +33,11 @@ const Description = (props) => {
     props.setCounter(data.count);
   }
 
+  const [description, setDescription] = useState(
+    localStorageGetDescription(params.id)
+  );
   useEffect(() => {
+    if (description.length > 0) return;
     const fetchItems = async () => {
       const url =
         "https://front-test-api.herokuapp.com/api/product/" + params.id;
@@ -42,10 +48,11 @@ const Description = (props) => {
       const loadedItems = [responseData];
 
       setDescription(loadedItems);
+      localStorageSaveDescription(loadedItems);
     };
 
     fetchItems();
-  }, [params]);
+  }, [params, description.length]);
 
   let colorsAvailable;
   description.forEach((element) => {
