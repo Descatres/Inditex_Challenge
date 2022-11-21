@@ -35,8 +35,29 @@ const Item = () => {
 
     fetchItems();
   }, [items.length]);
+  
+  const [ItemsListFilter, setItemsListFilter] = useState([]);
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    if (items.length === 0) return;
+    let ItemsListFiltered;
 
-  let productsList = items.map((item) => (
+    if (search.length === 0) ItemsListFiltered = [...items];
+    else
+      ItemsListFiltered = items.filter(
+        (elem) =>
+          (elem.brand.toUpperCase().includes(search.toUpperCase()) || elem.model.toUpperCase().includes(search.toUpperCase()))
+      );
+    const refresh = setTimeout(() => {
+      setItemsListFilter(ItemsListFiltered);
+    }, 0);
+
+    return () => {
+      clearTimeout(refresh);
+    };
+  }, [search, items]);
+
+  let itemsList = ItemsListFilter.map((item) => (
     <div key={item.id}>
       <Card style={{ width: "auto", margin: "10px" }}>
         <center>
@@ -61,35 +82,20 @@ const Item = () => {
       </Card>
     </div>
   ));
-
-  // const [search, setSearch] = useState({
-  //   search: "",
-  //   list: [],
-  // });
-
-  // const handleChange = (e) => {
-  //   const results = items.filter((item) => {
-  //     if (e.target.value === "") return item;
-  //     return item.title.toLowerCase().includes(e.target.value.toLowerCase());
-  //   });
-  //   setSearch({
-  //     search: e.target.value,
-  //     list: results,
-  //   });
-  // };
-
   return (
     <div className={classes.item}>
       <div className={classes.search}>
         <input
           type="text"
           placeholder="Search"
-          //value={search}
-          //onChange={handleChange}
+          value={search}
+          onChange={(elem) => {
+            setSearch(elem.currentTarget.value);
+          }}
         />
       </div>
       <Container style={{ width: "100%" }}>
-        <CardGroup>{productsList}</CardGroup>
+        <CardGroup>{itemsList}</CardGroup>
       </Container>
     </div>
   );
